@@ -8,12 +8,19 @@ package lewis.zach.elevator.model;
 public class Elevator 
 {
 	private int id;
-	private int currentFloor;
-	private int totalTrips;
-	private int totalFloors;
+	private int currentFloor = 1;
+	private int totalTrips = 0;
+	private int totalFloors = 0;
 	
 	boolean isMoving;
 	boolean isActive;
+	
+	public Elevator(int id)
+	{
+		this.id = id;
+	}
+	
+	/* Methods */
 	
 	public void move()
 	{
