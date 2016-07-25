@@ -39,12 +39,10 @@ public class Elevator
 		
 		String direction = currentFloor < stop ? "up" : "down";
 		
-		logTrip(destination, direction);
+		logTrip(destination, origin);
 		
-		while(Math.abs(currentFloor - destination) > 0)
-		{
-			direction = currentFloor < stop ? "up" : "down";
-			
+		while(Math.abs(currentFloor - stop) > 0)
+		{			
 			if(direction.equals("up") && (currentFloor + 1 <= max))
 			{
 				currentFloor++;
@@ -65,11 +63,30 @@ public class Elevator
 					openDoor(currentFloor, true);
 					closeDoor(currentFloor);
 					isMoving = true;
+					
+					if(destination > stop && !direction.equals("up"))
+					{
+						direction = "up";
+						stop = destination;
+					}
+					else if(destination < stop && !direction.equals("down"))
+					{
+						direction = "down";
+						stop = destination;
+					}
 				}
 				else
 				{
 					passFloor(currentFloor);
 				}
+			}
+			else if(direction.equals("up") && origin > destination)
+			{
+				passFloor(currentFloor);
+			}
+			else if(direction.equals("down") && origin < destination)
+			{
+				passFloor(currentFloor);
 			}
 			else
 			{
@@ -85,9 +102,9 @@ public class Elevator
 		}
 	}
 	
-	public void logTrip(int destination, String direction)
+	public void logTrip(int destination, int origin)
 	{
-		System.out.println(MessageFormat.format("Elevator #{0} embarking on trip #{1} going {2} to floor #{3} from floor #{4}", id, ++totalTrips, direction, destination, currentFloor));
+		System.out.println(MessageFormat.format("Elevator #{0} embarking on trip #{1} starting at floor #{2}, stopping at floor #{3} to pick up and dropping off at floor #{4}", id, ++totalTrips, currentFloor, origin, destination));
 	}
 	
 	public void passFloor(int floor)

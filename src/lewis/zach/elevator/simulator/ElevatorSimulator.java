@@ -17,21 +17,21 @@ public class ElevatorSimulator
 		
 		ElevatorController controller = new ElevatorController(numFloors, numElevators);
 		
-		ElevatorRequest test = new ElevatorRequest(8, 5);
+//		ElevatorRequest test = new ElevatorRequest(8, 5);
 		
-//		ElevatorRequest req1 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
-//		ElevatorRequest req2 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
-//		ElevatorRequest req3 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
-//		ElevatorRequest req4 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
-//		ElevatorRequest req5 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
-//		
-//		controller.handleRequest(req1);
-//		controller.handleRequest(req2);
-//		controller.handleRequest(req3);
-//		controller.handleRequest(req4);
-//		controller.handleRequest(req5);
+		ElevatorRequest req1 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req2 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req3 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req4 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req5 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
 		
-		controller.handleRequest(test);
+		controller.handleRequest(req1);
+		controller.handleRequest(req2);
+		controller.handleRequest(req3);
+		controller.handleRequest(req4);
+		controller.handleRequest(req5);
+		
+//		controller.handleRequest(test);
 	}
 	
 	/**
@@ -41,6 +41,8 @@ public class ElevatorSimulator
 	 */
 	private static int chooseFloor(int max)
 	{
-		return (int) Math.random() * max;
+		double random = Math.random();
+		
+		return (int) (random * max);
 	}
 }
