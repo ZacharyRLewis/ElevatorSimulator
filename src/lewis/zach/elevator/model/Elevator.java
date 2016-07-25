@@ -1,5 +1,7 @@
 package lewis.zach.elevator.model;
 
+import java.text.MessageFormat;
+
 /**
  * This class represents an elevator.
  * 
@@ -22,39 +24,69 @@ public class Elevator
 	
 	/* Methods */
 	
-	public void move()
+	public void move(int destination)
 	{
+		String direction = currentFloor < destination ? "up" : "down";
 		
+		logTrip(destination, direction);
+		
+		while(Math.abs(currentFloor - destination) > 0)
+		{
+			if(direction.equals("up"))
+			{
+				currentFloor++;
+			}
+			else
+			{
+				currentFloor--;
+			}
+			
+			if(Math.abs(currentFloor - destination) > 0)
+			{
+				passFloor(currentFloor);
+			}
+			else
+			{
+				openDoor(currentFloor);
+			}
+		}
 	}
 	
-	public void passFloor()
+	public void logTrip(int destination, String direction)
 	{
-		
+		System.out.println(MessageFormat.format("Elevator #{0} embarking on trip #{1} going {2} to floor #{3} from floor #{4}", id, totalTrips, direction, destination, currentFloor));
 	}
 	
-	public void logTrip()
+	public void passFloor(int floor)
 	{
+		System.out.println(MessageFormat.format("	Elevator #{0} passed floor #{1}", id, floor));
+	}
+
+	public void openDoor(int floor)
+	{
+		System.out.println(MessageFormat.format("	Elevator #{0} opened door at floor #{1}", id, floor));
 		
+		isMoving = false;
 	}
 	
-	public void openDoor()
+	public void closeDoor(int floor)
 	{
-		
-	}
-	
-	public void closeDoor()
-	{
-		
+		System.out.println(MessageFormat.format("	Elevator #{0} closed door at floor #{1}", id, floor));
 	}
 	
 	public void stopForMaintenance()
 	{
+		System.out.println(MessageFormat.format("	Elevator #{0} stopping for maintenance after trip #{1}", id, totalTrips));
 		
+		isMoving = false;
+		isActive = false;
 	}
 	
 	public void restartFromMaintenance()
 	{
+		System.out.println(MessageFormat.format("	Elevator #{0} restarting after maintenance on floor #{1}", id, currentFloor));
 		
+		isActive = true;
 	}
 	
 	/* Getters and Setters */

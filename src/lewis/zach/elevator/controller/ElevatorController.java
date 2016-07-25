@@ -44,7 +44,7 @@ public class ElevatorController
 	{
 		Elevator elev = selectElevator(request.getOriginFloor(), request.getDestinationFloor());
 		
-		elev.move();
+		elev.move(request.getDestinationFloor());
 	}
 	
 	/**
