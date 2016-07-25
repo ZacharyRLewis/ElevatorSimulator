@@ -16,8 +16,8 @@ public class Elevator
 	private int totalTrips = 0;
 	private int totalFloors = 0;
 	
-	boolean isMoving;
-	boolean isActive;
+	boolean isMoving = false;
+	boolean isActive = true;
 	
 	public Elevator(int id)
 	{
@@ -33,7 +33,7 @@ public class Elevator
 	 * @param max
 	 * @param min
 	 */
-	public void move(int destination, int max, int min)
+	public void move(int destination, int origin, int max, int min)
 	{
 		String direction = currentFloor < destination ? "up" : "down";
 		
@@ -56,11 +56,16 @@ public class Elevator
 			
 			if(Math.abs(currentFloor - destination) > 0)
 			{
+				if(currentFloor == origin)
+				{
+					openDoor(currentFloor, true);
+				}
+				
 				passFloor(currentFloor);
 			}
 			else
 			{
-				openDoor(currentFloor);
+				openDoor(currentFloor, false);
 			}
 		}
 		
@@ -72,7 +77,7 @@ public class Elevator
 	
 	public void logTrip(int destination, String direction)
 	{
-		System.out.println(MessageFormat.format("Elevator #{0} embarking on trip #{1} going {2} to floor #{3} from floor #{4}", id, totalTrips, direction, destination, currentFloor));
+		System.out.println(MessageFormat.format("Elevator #{0} embarking on trip #{1} going {2} to floor #{3} from floor #{4}", id, ++totalTrips, direction, destination, currentFloor));
 	}
 	
 	public void passFloor(int floor)
@@ -80,16 +85,18 @@ public class Elevator
 		System.out.println(MessageFormat.format("	Elevator #{0} passed floor #{1}", id, floor));
 	}
 
-	public void openDoor(int floor)
+	public void openDoor(int floor, boolean pickup)
 	{
-		System.out.println(MessageFormat.format("	Elevator #{0} opened door at floor #{1}", id, floor));
+		String extra = pickup ? "pick up" : "drop off";
+		
+		System.out.println(MessageFormat.format("	Elevator #{0} opened door at floor #{1} to {2} passenger", id, floor, extra));
 		
 		isMoving = false;
 	}
 	
 	public void closeDoor(int floor)
-	{
-		System.out.println(MessageFormat.format("	Elevator #{0} closed door at floor #{1}", id, floor));
+	{		
+		System.out.println(MessageFormat.format("	Elevator #{0} closed door at floor #{1} {2}", id, floor));
 	}
 	
 	public void stopForMaintenance()
@@ -105,6 +112,12 @@ public class Elevator
 		System.out.println(MessageFormat.format("	Elevator #{0} has received maintenance on floor #{1}. Will reactivate.", id, currentFloor));
 		
 		isActive = true;
+	}
+	
+	public String toString() 
+	{
+		return "Elevator [id=" + id + ", currentFloor=" + currentFloor + ", totalTrips=" + totalTrips + ", totalFloors="
+				+ totalFloors + ", isMoving=" + isMoving + ", isActive=" + isActive + "]";
 	}
 	
 	/* Getters and Setters */

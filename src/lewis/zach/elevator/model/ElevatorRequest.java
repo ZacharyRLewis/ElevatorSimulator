@@ -15,9 +15,14 @@ public class ElevatorRequest
 		this.originFloor = originFloor;
 		this.destinationFloor = destinationFloor;
 	}
-
-	/* Getters and Setters */
 	
+	public String toString() 
+	{
+		return "ElevatorRequest [originFloor=" + originFloor + ", destinationFloor=" + destinationFloor + "]";
+	}
+	
+	/* Getters and Setters */
+
 	public int getOriginFloor() 
 	{
 		return originFloor;
