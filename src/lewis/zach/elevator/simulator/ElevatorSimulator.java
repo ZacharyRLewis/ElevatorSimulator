@@ -1,6 +1,7 @@
 package lewis.zach.elevator.simulator;
 
 import lewis.zach.elevator.controller.ElevatorController;
+import lewis.zach.elevator.model.ElevatorRequest;
 
 /**
  * This class runs the elevator simulator.
@@ -11,8 +12,31 @@ public class ElevatorSimulator
 {
 	public static void main(String[] args) 
 	{
-		ElevatorController controller = new ElevatorController(10, 5);
+		int numFloors = 10;
+		int numElevators = 5;
 		
+		ElevatorController controller = new ElevatorController(numFloors, numElevators);
 		
+		ElevatorRequest req1 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req2 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req3 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req4 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		ElevatorRequest req5 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
+		
+		controller.handleRequest(req1);
+		controller.handleRequest(req2);
+		controller.handleRequest(req3);
+		controller.handleRequest(req4);
+		controller.handleRequest(req5);
+	}
+	
+	/**
+	 * Select a random floor.
+	 * 
+	 * @param max
+	 */
+	private static int chooseFloor(int max)
+	{
+		return (int) Math.random() * max;
 	}
 }

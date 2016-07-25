@@ -9,6 +9,8 @@ import java.text.MessageFormat;
  */
 public class Elevator 
 {
+	public static final int MAX_TRIPS_B4_MAINTENANCE = 100;
+	
 	private int id;
 	private int currentFloor = 1;
 	private int totalTrips = 0;
@@ -24,7 +26,14 @@ public class Elevator
 	
 	/* Methods */
 	
-	public void move(int destination)
+	/**
+	 * Move the elevator to the destination floor.
+	 * 
+	 * @param destination
+	 * @param max
+	 * @param min
+	 */
+	public void move(int destination, int max, int min)
 	{
 		String direction = currentFloor < destination ? "up" : "down";
 		
@@ -32,13 +41,17 @@ public class Elevator
 		
 		while(Math.abs(currentFloor - destination) > 0)
 		{
-			if(direction.equals("up"))
+			if(direction.equals("up") && (currentFloor + 1 <= max))
 			{
 				currentFloor++;
 			}
-			else
+			else if(currentFloor - 1 >= min)
 			{
 				currentFloor--;
+			}
+			else
+			{
+				System.out.println(MessageFormat.format("Something unexpected happened when trying to go {0} from floor {1}", direction, currentFloor));
 			}
 			
 			if(Math.abs(currentFloor - destination) > 0)
@@ -49,6 +62,11 @@ public class Elevator
 			{
 				openDoor(currentFloor);
 			}
+		}
+		
+		if(totalTrips % MAX_TRIPS_B4_MAINTENANCE == 0)
+		{
+			stopForMaintenance();
 		}
 	}
 	
@@ -82,9 +100,9 @@ public class Elevator
 		isActive = false;
 	}
 	
-	public void restartFromMaintenance()
+	public void receiveMaintenance()
 	{
-		System.out.println(MessageFormat.format("	Elevator #{0} restarting after maintenance on floor #{1}", id, currentFloor));
+		System.out.println(MessageFormat.format("	Elevator #{0} has received maintenance on floor #{1}. Will reactivate.", id, currentFloor));
 		
 		isActive = true;
 	}

@@ -15,7 +15,6 @@ import lewis.zach.elevator.model.Floor;
 public class ElevatorController 
 {
 	public static final int MIN_FLOOR = 1;
-	public static final int MAX_TRIPS_B4_MAINTENANCE = 100;
 	
 	private List<Floor> floors = new ArrayList<Floor>();
 	private List<Elevator> elevators = new ArrayList<Elevator>();
@@ -44,7 +43,7 @@ public class ElevatorController
 	{
 		Elevator elev = selectElevator(request.getOriginFloor(), request.getDestinationFloor());
 		
-		elev.move(request.getDestinationFloor());
+		elev.move(request.getDestinationFloor(), elevators.size(), MIN_FLOOR);
 	}
 	
 	/**
@@ -84,6 +83,22 @@ public class ElevatorController
 		}
 		
 		return selected;
+	}
+	
+	/**
+	 * Service an elevator.
+	 * 
+	 * @param id
+	 */
+	public void serviceElevator(int id)
+	{
+		for(Elevator elev : elevators)
+		{
+			if(elev.getId() == id)
+			{
+				elev.receiveMaintenance();
+			}
+		}
 	}
 	
 	/* Getters and Setters */
