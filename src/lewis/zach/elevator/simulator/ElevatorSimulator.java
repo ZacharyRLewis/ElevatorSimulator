@@ -17,7 +17,7 @@ public class ElevatorSimulator
 		
 		ElevatorController controller = new ElevatorController(numFloors, numElevators);
 		
-		ElevatorRequest test = new ElevatorRequest(5, 8);
+		ElevatorRequest test = new ElevatorRequest(8, 5);
 		
 //		ElevatorRequest req1 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));
 //		ElevatorRequest req2 = new ElevatorRequest(chooseFloor(numFloors), chooseFloor(numFloors));

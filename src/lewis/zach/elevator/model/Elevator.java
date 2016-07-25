@@ -35,12 +35,16 @@ public class Elevator
 	 */
 	public void move(int destination, int origin, int max, int min)
 	{
-		String direction = currentFloor < destination ? "up" : "down";
+		int stop = destination > origin ? destination : origin;
+		
+		String direction = currentFloor < stop ? "up" : "down";
 		
 		logTrip(destination, direction);
 		
 		while(Math.abs(currentFloor - destination) > 0)
 		{
+			direction = currentFloor < stop ? "up" : "down";
+			
 			if(direction.equals("up") && (currentFloor + 1 <= max))
 			{
 				currentFloor++;
@@ -59,13 +63,19 @@ public class Elevator
 				if(currentFloor == origin)
 				{
 					openDoor(currentFloor, true);
+					closeDoor(currentFloor);
+					isMoving = true;
 				}
-				
-				passFloor(currentFloor);
+				else
+				{
+					passFloor(currentFloor);
+				}
 			}
 			else
 			{
 				openDoor(currentFloor, false);
+				isMoving = false;
+				closeDoor(currentFloor);
 			}
 		}
 		
@@ -96,7 +106,7 @@ public class Elevator
 	
 	public void closeDoor(int floor)
 	{		
-		System.out.println(MessageFormat.format("	Elevator #{0} closed door at floor #{1} {2}", id, floor));
+		System.out.println(MessageFormat.format("	Elevator #{0} closed door at floor #{1}", id, floor));
 	}
 	
 	public void stopForMaintenance()
